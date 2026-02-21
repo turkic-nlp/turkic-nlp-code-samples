@@ -1,0 +1,3 @@
+turkicnlp[all]
+jupyter
+ipykernel

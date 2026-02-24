@@ -101,10 +101,14 @@ FLORES-200 Turkic languages covered by notebook 29:
 ## Citation
 
 ```bibtex
-@inproceedings{hakimov2026turkicnlp,
-  title     = {{TurkicNLP}: An Open-Source {NLP} Toolkit for {Turkic} Languages},
-  author    = {Hakimov, Sherzod},
-  year      = {2026}
+@misc{hakimov2026turkicnlpnlptoolkit,
+      title={TurkicNLP: An NLP Toolkit for Turkic Languages}, 
+      author={Sherzod Hakimov},
+      year={2026},
+      eprint={2602.19174},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2602.19174}, 
 }
 ```
 

@@ -503,11 +503,12 @@ print("EN:", doc.translation)
 
 def uzbek():
     cells = [
-        md("# Uzbek (uzb) — Morphological Analysis and Transliteration\n\n"
+        md("# Uzbek (uzb) — Full NLP Pipeline with Custom Stanza Models\n\n"
            "Uzbek uses the Latin script since 1995 (official). The Cyrillic variant "
            "remains in wide use. TurkicNLP provides Apertium FST morphology (Stable), "
-           "bidirectional Cyrillic↔Latin transliteration, and NLLB-200 "
-           "embeddings/translation."),
+           "custom-trained Stanza neural models for POS tagging, lemmatisation, and "
+           "dependency parsing, bidirectional Cyrillic↔Latin transliteration, "
+           "and NLLB-200 embeddings/translation."),
         INSTALL,
         IMPORT,
         md("## 1. Download Models"),
@@ -553,7 +554,32 @@ doc = nlp_cyrl("Мен мактабга бораман.")
 for w in doc.words:
     print(f"{w.text:<18} lemma={w.lemma:<12} feats={w.feats}")
 """),
-        md("## 4. Translation via NLLB-200"),
+        md("## 4. POS Tagging, Lemmatisation, and Dependency Parsing (Custom Stanza)\n\n"
+           "TurkicNLP includes custom-trained Stanza models for Uzbek, providing "
+           "POS tagging, lemmatisation, and dependency parsing."),
+        code("""\
+nlp_parse = Pipeline(
+    "uzb",
+    processors=["tokenize", "pos", "lemma", "depparse"],
+)
+
+doc = nlp_parse("Men maktabga ketdim.")
+print(f"{'Word':<20} {'UPOS':<8} {'Lemma':<20} {'Head':<5} {'Deprel'}")
+print("-" * 60)
+for w in doc.words:
+    print(f"{w.text:<20} {w.upos:<8} {w.lemma:<20} {w.head!s:<5} {w.deprel}")
+"""),
+        md("## 5. Full Pipeline with CoNLL-U Export"),
+        code("""\
+nlp_full = Pipeline(
+    "uzb",
+    processors=["tokenize", "morph", "pos", "lemma", "depparse"],
+    morph_backend="apertium",
+)
+doc = nlp_full("O'zbekiston Markaziy Osiyodagi eng yirik davlatlardan biri.")
+print(doc.to_conllu())
+"""),
+        md("## 6. Translation via NLLB-200"),
         code("""\
 turkicnlp.download("uzb", processors=["translate"])
 trans = Pipeline("uzb", processors=["translate"], translate_tgt_lang="eng_Latn")
@@ -566,11 +592,12 @@ print("EN:", doc.translation)
 
 def azerbaijani():
     cells = [
-        md("# Azerbaijani (aze) — Morphological Analysis and Transliteration\n\n"
+        md("# Azerbaijani (aze) — Full NLP Pipeline with Custom Stanza Models\n\n"
            "Azerbaijani uses the Latin script in Azerbaijan (official since 1991) "
            "and the Cyrillic script in Russia. TurkicNLP provides Apertium FST "
-           "morphology (Stable), bidirectional Cyrillic↔Latin transliteration, "
-           "and NLLB-200 embeddings/translation."),
+           "morphology (Stable), custom-trained Stanza neural models for POS tagging, "
+           "lemmatisation, and dependency parsing, bidirectional Cyrillic↔Latin "
+           "transliteration, and NLLB-200 embeddings/translation."),
         INSTALL,
         IMPORT,
         md("## 1. Download Models"),
@@ -595,7 +622,32 @@ doc = nlp("Mən məktəbə gedirəm.")
 for w in doc.words:
     print(f"{w.text:<20} lemma={w.lemma:<15} feats={w.feats}")
 """),
-        md("## 4. Translation"),
+        md("## 4. POS Tagging, Lemmatisation, and Dependency Parsing (Custom Stanza)\n\n"
+           "TurkicNLP includes custom-trained Stanza models for Azerbaijani, providing "
+           "POS tagging, lemmatisation, and dependency parsing."),
+        code("""\
+nlp_parse = Pipeline(
+    "aze",
+    processors=["tokenize", "pos", "lemma", "depparse"],
+)
+
+doc = nlp_parse("Bakı Azərbaycanın paytaxtıdır.")
+print(f"{'Word':<20} {'UPOS':<8} {'Lemma':<20} {'Head':<5} {'Deprel'}")
+print("-" * 60)
+for w in doc.words:
+    print(f"{w.text:<20} {w.upos:<8} {w.lemma:<20} {w.head!s:<5} {w.deprel}")
+"""),
+        md("## 5. Full Pipeline with CoNLL-U Export"),
+        code("""\
+nlp_full = Pipeline(
+    "aze",
+    processors=["tokenize", "morph", "pos", "lemma", "depparse"],
+    morph_backend="apertium",
+)
+doc = nlp_full("Azərbaycan Cənubi Qafqazda yerləşən bir dövlətdir.")
+print(doc.to_conllu())
+"""),
+        md("## 6. Translation"),
         code("""\
 turkicnlp.download("aze", processors=["translate"])
 trans = Pipeline("aze", processors=["translate"], translate_tgt_lang="eng_Latn")
@@ -608,11 +660,12 @@ print("EN:", doc.translation)
 
 def tatar():
     cells = [
-        md("# Tatar (tat) — Production Morphology and Zamanälif Transliteration\n\n"
+        md("# Tatar (tat) — Full NLP Pipeline with Custom Stanza Models\n\n"
            "Tatar is written in Cyrillic (primary). The Zamanälif Latin alphabet "
            "provides an alternative script. TurkicNLP offers Production-quality "
-           "Apertium FST morphology and bidirectional Cyrillic↔Latin (Zamanälif) "
-           "transliteration."),
+           "Apertium FST morphology, custom-trained Stanza neural models for POS "
+           "tagging, lemmatisation, and dependency parsing, and bidirectional "
+           "Cyrillic↔Latin (Zamanälif) transliteration."),
         INSTALL,
         IMPORT,
         md("## 1. Download Models"),
@@ -642,7 +695,34 @@ doc = nlp("Мин мәктәпкә барам.")
 for w in doc.words:
     print(f"{w.text:<18} lemma={w.lemma:<12} feats={w.feats}")
 """),
-        md("## 4. Translation"),
+        md("## 4. POS Tagging, Lemmatisation, and Dependency Parsing (Custom Stanza)\n\n"
+           "TurkicNLP includes custom-trained Stanza models for Tatar, providing "
+           "POS tagging, lemmatisation, and dependency parsing."),
+        code("""\
+nlp_parse = Pipeline(
+    "tat",
+    processors=["tokenize", "pos", "lemma", "depparse"],
+    script="Cyrl",
+)
+
+doc = nlp_parse("Бер журнал бу ай санында аның тормышын микроскоп астына ала.")
+print(f"{'Word':<20} {'UPOS':<8} {'Lemma':<20} {'Head':<5} {'Deprel'}")
+print("-" * 60)
+for w in doc.words:
+    print(f"{w.text:<20} {w.upos:<8} {w.lemma:<20} {w.head!s:<5} {w.deprel}")
+"""),
+        md("## 5. Full Pipeline with CoNLL-U Export"),
+        code("""\
+nlp_full = Pipeline(
+    "tat",
+    processors=["tokenize", "morph", "pos", "lemma", "depparse"],
+    morph_backend="apertium",
+    script="Cyrl",
+)
+doc = nlp_full("Татарстан Россия Федерациясе составындагы республика.")
+print(doc.to_conllu())
+"""),
+        md("## 6. Translation"),
         code("""\
 turkicnlp.download("tat", processors=["translate"])
 trans = Pipeline("tat", processors=["translate"], translate_tgt_lang="rus_Cyrl")
@@ -708,10 +788,11 @@ print("EN:", doc.translation)
 
 def bashkir():
     cells = [
-        md("# Bashkir (bak) — Morphological Analysis\n\n"
+        md("# Bashkir (bak) — Full NLP Pipeline with Custom Stanza Models\n\n"
            "Bashkir (Kipchak branch) is written in Cyrillic. "
-           "TurkicNLP provides Beta-quality Apertium FST morphological analysis "
-           "and NLLB-200 embeddings and translation."),
+           "TurkicNLP provides Beta-quality Apertium FST morphological analysis, "
+           "custom-trained Stanza neural models for POS tagging, lemmatisation, "
+           "and dependency parsing, and NLLB-200 embeddings and translation."),
         INSTALL,
         IMPORT,
         md("## 1. Download Models"),
@@ -734,7 +815,32 @@ doc = nlp("Мин мәктәпкә барам.")
 for w in doc.words:
     print(f"{w.text:<18} lemma={w.lemma:<12} feats={w.feats}")
 """),
-        md("## 4. Translation"),
+        md("## 4. POS Tagging, Lemmatisation, and Dependency Parsing (Custom Stanza)\n\n"
+           "TurkicNLP includes custom-trained Stanza models for Bashkir, providing "
+           "POS tagging, lemmatisation, and dependency parsing."),
+        code("""\
+nlp_parse = Pipeline(
+    "bak",
+    processors=["tokenize", "pos", "lemma", "depparse"],
+)
+
+doc = nlp_parse("Бер журнал был айҙың һанында уның тормошон микроскоп аҫтына ала.")
+print(f"{'Word':<20} {'UPOS':<8} {'Lemma':<20} {'Head':<5} {'Deprel'}")
+print("-" * 60)
+for w in doc.words:
+    print(f"{w.text:<20} {w.upos:<8} {w.lemma:<20} {w.head!s:<5} {w.deprel}")
+"""),
+        md("## 5. Full Pipeline with CoNLL-U Export"),
+        code("""\
+nlp_full = Pipeline(
+    "bak",
+    processors=["tokenize", "morph", "pos", "lemma", "depparse"],
+    morph_backend="apertium",
+)
+doc = nlp_full("Башҡортостан — Рәсәй Федерацияһы субъекты.")
+print(doc.to_conllu())
+"""),
+        md("## 6. Translation"),
         code("""\
 turkicnlp.download("bak", processors=["translate"])
 trans = Pipeline("bak", processors=["translate"], translate_tgt_lang="rus_Cyrl")
@@ -747,20 +853,22 @@ print("RU:", doc.translation)
 
 def turkmen():
     cells = [
-        md("# Turkmen (tuk) — Morphological Analysis and Transliteration\n\n"
+        md("# Turkmen (tuk) — Full NLP Pipeline with Custom Stanza Models\n\n"
            "Turkmen uses the Latin script (official since 1993). "
-           "TurkicNLP provides Beta-quality Apertium FST morphological analysis "
-           "and Cyrillic↔Latin transliteration."),
+           "TurkicNLP provides Beta-quality Apertium FST morphological analysis, "
+           "custom-trained Stanza neural models for POS tagging, lemmatisation, "
+           "and dependency parsing, and Cyrillic↔Latin transliteration."),
         INSTALL,
         IMPORT,
-        md("## 1. Tokenisation"),
+        md("## 1. Download Models"),
+        code('turkicnlp.download("tuk")'),
+        md("## 2. Tokenisation"),
         code("""\
-turkicnlp.download("tuk")
 nlp_tok = Pipeline("tuk", processors=["tokenize"])
 doc = nlp_tok("Men mekdebe barýaryn.")
 print([w.text for w in doc.words])
 """),
-        md("## 2. Cyrillic ↔ Latin Transliteration (1993 standard)"),
+        md("## 3. Cyrillic ↔ Latin Transliteration (1993 standard)"),
         code("""\
 from turkicnlp.scripts import Script
 from turkicnlp.scripts.transliterator import Transliterator
@@ -769,7 +877,7 @@ cyrl = "Мен мекдебе барӹарын."
 t = Transliterator("tuk", source=Script.CYRILLIC, target=Script.LATIN)
 print("Latin:", t.transliterate(cyrl))
 """),
-        md("## 3. Morphological Analysis (Apertium FST — Beta)"),
+        md("## 4. Morphological Analysis (Apertium FST — Beta)"),
         code("""\
 nlp = Pipeline(
     "tuk",
@@ -780,7 +888,32 @@ doc = nlp("Men mekdebe barýaryn.")
 for w in doc.words:
     print(f"{w.text:<18} lemma={w.lemma:<12} feats={w.feats}")
 """),
-        md("## 4. Translation"),
+        md("## 5. POS Tagging, Lemmatisation, and Dependency Parsing (Custom Stanza)\n\n"
+           "TurkicNLP includes custom-trained Stanza models for Turkmen, providing "
+           "POS tagging, lemmatisation, and dependency parsing."),
+        code("""\
+nlp_parse = Pipeline(
+    "tuk",
+    processors=["tokenize", "pos", "lemma", "depparse"],
+)
+
+doc = nlp_parse("Men mektebe gitdim we Murat bilen kitap okadym.")
+print(f"{'Word':<20} {'UPOS':<8} {'Lemma':<20} {'Head':<5} {'Deprel'}")
+print("-" * 60)
+for w in doc.words:
+    print(f"{w.text:<20} {w.upos:<8} {w.lemma:<20} {w.head!s:<5} {w.deprel}")
+"""),
+        md("## 6. Full Pipeline with CoNLL-U Export"),
+        code("""\
+nlp_full = Pipeline(
+    "tuk",
+    processors=["tokenize", "morph", "pos", "lemma", "depparse"],
+    morph_backend="apertium",
+)
+doc = nlp_full("Türkmenistan Orta Aziýada ýerleşýän döwletdir.")
+print(doc.to_conllu())
+"""),
+        md("## 7. Translation"),
         code("""\
 turkicnlp.download("tuk", processors=["translate"])
 trans = Pipeline("tuk", processors=["translate"], translate_tgt_lang="eng_Latn")
@@ -2020,7 +2153,377 @@ if clf_multi:
 
 
 # ---------------------------------------------------------------------------
-# Define all 24 per-language notebooks + 5 thematic embedding notebooks
+# Notebook 30 — Multilingual Neural Models (Glot500)
+# ---------------------------------------------------------------------------
+
+def multilingual_models():
+    return [
+        md("""\
+# Multilingual Neural Models for Turkic Languages (Glot500)
+
+TurkicNLP includes multilingual neural models based on the **Glot500** backbone
+that provide POS tagging, dependency parsing, morphological analysis, and
+lemmatisation across many Turkic languages using a single shared model.
+
+These models are particularly powerful because they support:
+
+- **Trained languages** (10): Turkish, Azerbaijani, Uzbek, Turkmen, Kazakh,
+  Kyrgyz, Bashkir, Tatar, Uyghur, Ottoman Turkish
+- **Zero-shot languages** (via proxy embeddings): Karakalpak, Kumyk, Sakha
+
+This notebook demonstrates three capabilities:
+
+| Feature | Processor | Backend |
+|---------|-----------|---------|
+| POS tagging + Dependency parsing | `pos`, `depparse` | `multilingual_glot500` |
+| Morphological analysis (UPOS + UD features + lemma) | `morph_neural` | multilingual Glot500 morph |
+| Backend comparison | Stanza vs Glot500 | side-by-side |\
+"""),
+        INSTALL,
+        IMPORT,
+
+        md("## 1. Download Models"),
+        code("""\
+# Download for multiple languages — the Glot500 backbone is shared
+for lang in ["tur", "kaz", "uzb", "kaa"]:
+    turkicnlp.download(lang)
+"""),
+
+        md("## 2. Multilingual POS Tagging and Dependency Parsing\n\n"
+           "The Glot500-based POS tagger and dependency parser use a shared model "
+           "with per-language embeddings. Use `pos_backend=\"multilingual_glot500\"` "
+           "and `depparse_backend=\"multilingual_glot500\"` to select this backend."),
+        code("""\
+# Turkish
+nlp_tur = Pipeline(
+    "tur",
+    processors=["tokenize", "pos", "depparse"],
+    pos_backend="multilingual_glot500",
+    depparse_backend="multilingual_glot500",
+)
+doc = nlp_tur("Ahmet bugün okula gitti.")
+print("=== Turkish ===")
+print(f"{'Word':<15} {'UPOS':<8} {'Head':<5} {'Deprel'}")
+print("-" * 40)
+for w in doc.words:
+    print(f"{w.text:<15} {w.upos:<8} {w.head!s:<5} {w.deprel}")
+"""),
+        code("""\
+# Kazakh (Cyrillic)
+nlp_kaz = Pipeline(
+    "kaz",
+    processors=["tokenize", "pos", "depparse"],
+    pos_backend="multilingual_glot500",
+    depparse_backend="multilingual_glot500",
+    script="Cyrl",
+)
+doc = nlp_kaz("Ахмет бүгін мектепке барды.")
+print("=== Kazakh ===")
+print(f"{'Word':<15} {'UPOS':<8} {'Head':<5} {'Deprel'}")
+print("-" * 40)
+for w in doc.words:
+    print(f"{w.text:<15} {w.upos:<8} {w.head!s:<5} {w.deprel}")
+"""),
+        code("""\
+# Uzbek (Latin)
+nlp_uzb = Pipeline(
+    "uzb",
+    processors=["tokenize", "pos", "depparse"],
+    pos_backend="multilingual_glot500",
+    depparse_backend="multilingual_glot500",
+)
+doc = nlp_uzb("Ahmat bugun maktabga ketdi.")
+print("=== Uzbek ===")
+print(f"{'Word':<15} {'UPOS':<8} {'Head':<5} {'Deprel'}")
+print("-" * 40)
+for w in doc.words:
+    print(f"{w.text:<15} {w.upos:<8} {w.head!s:<5} {w.deprel}")
+"""),
+
+        md("## 3. Zero-shot Parsing for Unseen Languages\n\n"
+           "The multilingual model can parse languages it was never directly "
+           "trained on, using proxy embeddings from related languages. "
+           "Karakalpak (Kipchak, close to Uzbek) is one such zero-shot language."),
+        code("""\
+# Karakalpak — zero-shot via Uzbek proxy embedding
+nlp_kaa = Pipeline(
+    "kaa",
+    processors=["tokenize", "pos", "depparse"],
+    pos_backend="multilingual_glot500",
+    depparse_backend="multilingual_glot500",
+)
+doc = nlp_kaa("Qiz dostina xat jazdi.")
+print("=== Karakalpak (zero-shot) ===")
+print(f"{'Word':<15} {'UPOS':<8} {'Head':<5} {'Deprel'}")
+print("-" * 40)
+for w in doc.words:
+    print(f"{w.text:<15} {w.upos:<8} {w.head!s:<5} {w.deprel}")
+print("\\nCoNLL-U:\\n", doc.to_conllu())
+"""),
+
+        md("## 4. Neural Morphological Analysis (Glot500 Morph)\n\n"
+           "The `morph_neural` processor provides UPOS tags, UD morphological "
+           "features, and lemmatisation for 21 Turkic languages using the Glot500 "
+           "morph model. This is broader than the Stanza-based models."),
+        code("""\
+turkicnlp.download("tur", processors=["tokenize", "morph_neural"])
+
+nlp_morph = Pipeline(
+    "tur",
+    processors=["tokenize", "morph_neural"],
+)
+doc = nlp_morph("Çocuklar okula gidiyorlar.")
+print("=== Turkish — Neural Morphology ===")
+print(f"{'Word':<20} {'UPOS':<8} {'Lemma':<15} {'Features'}")
+print("-" * 70)
+for w in doc.words:
+    print(f"{w.text:<20} {w.upos:<8} {w.lemma:<15} {w.feats}")
+"""),
+        code("""\
+# Neural morph for low-resource languages
+for lang, text, label in [
+    ("sah", "Мин оскуолаҕа бардым.", "Sakha"),
+    ("kaa", "Men mektepke bardim.", "Karakalpak (zero-shot)"),
+]:
+    turkicnlp.download(lang, processors=["tokenize", "morph_neural"])
+    nlp = Pipeline(lang, processors=["tokenize", "morph_neural"])
+    doc = nlp(text)
+    print(f"\\n=== {label} ===")
+    for w in doc.words:
+        print(f"  {w.text:<20} upos={w.upos:<8} lemma={w.lemma:<15} feats={w.feats}")
+"""),
+
+        md("## 5. Backend Comparison: Stanza vs Glot500\n\n"
+           "For languages with both Stanza and Glot500 models (e.g., Turkish, Kazakh), "
+           "you can compare outputs side-by-side. Stanza models are language-specific "
+           "and typically more accurate for high-resource languages, while Glot500 "
+           "provides broader coverage."),
+        code("""\
+text = "Ahmet bugün okula gitti."
+
+# Stanza backend (language-specific, trained on Turkish IMST treebank)
+nlp_stanza = Pipeline(
+    "tur",
+    processors=["tokenize", "pos", "lemma", "depparse"],
+)
+doc_stanza = nlp_stanza(text)
+
+# Glot500 backend (multilingual)
+nlp_glot = Pipeline(
+    "tur",
+    processors=["tokenize", "pos", "depparse"],
+    pos_backend="multilingual_glot500",
+    depparse_backend="multilingual_glot500",
+)
+doc_glot = nlp_glot(text)
+
+print(f"{'Word':<15} {'Stanza UPOS':<13} {'Glot500 UPOS':<14} {'Stanza Dep':<12} {'Glot500 Dep'}")
+print("-" * 70)
+# Both backends use the same rule-based tokenizer, so word counts match
+for ws, wg in zip(doc_stanza.words, doc_glot.words):
+    match_pos = "✓" if ws.upos == wg.upos else "✗"
+    match_dep = "✓" if ws.deprel == wg.deprel else "✗"
+    print(f"{ws.text:<15} {ws.upos:<13} {wg.upos:<14} {ws.deprel:<12} {wg.deprel} {match_pos}{match_dep}")
+"""),
+
+        md("## 6. Processing Multiple Languages in a Loop\n\n"
+           "The multilingual backend makes it easy to process text from many "
+           "Turkic languages in a uniform way."),
+        code("""\
+sentences = [
+    ("tur", "Bugün hava güzel.", "Turkish"),
+    ("kaz", "Бүгін ауа райы жақсы.", "Kazakh"),
+    ("uzb", "Bugun ob-havo yaxshi.", "Uzbek"),
+    ("tat", "Бүген һава матур.", "Tatar"),
+    ("kir", "Бүгүн аба ырайы жакшы.", "Kyrgyz"),
+]
+
+for lang, text, label in sentences:
+    nlp = Pipeline(
+        lang,
+        processors=["tokenize", "pos", "depparse"],
+        pos_backend="multilingual_glot500",
+        depparse_backend="multilingual_glot500",
+    )
+    doc = nlp(text)
+    tags = " ".join(f"{w.text}/{w.upos}" for w in doc.words)
+    print(f"[{label:<10}] {tags}")
+"""),
+    ]
+
+
+# ---------------------------------------------------------------------------
+# Notebook 31 — Morpheme Tokenizer
+# ---------------------------------------------------------------------------
+
+def morpheme_tokenizer_demo():
+    return [
+        md("""\
+# Morpheme Tokenizer — Hybrid Neural + FST Morpheme Segmentation
+
+Turkic languages are agglutinative: a single word can carry many suffixes
+encoding grammatical features like number, case, possession, tense, and more.
+Understanding the internal morpheme structure of words is critical for:
+
+- **Morphology-aware NLP:** better tokenisation for language models
+- **Linguistic analysis:** automatic morpheme glossing
+- **Educational tools:** breaking words into meaningful units
+- **Low-resource MT:** morpheme-level translation strategies
+
+TurkicNLP's `MorphemeTokenizer` uses a **hybrid approach**:
+
+1. **Neural backbone** (Glot500 morph model) — provides UPOS, UD features, and lemma
+2. **Apertium HFST transducer** — adds derivational morphology tags
+3. **Language-specific suffix tables** — maps UD features to surface allomorphs
+   using phonological rules (vowel harmony, consonant context)
+
+**Supported languages (16):** Turkish, Azerbaijani, Kazakh, Uzbek, Kyrgyz,
+Tatar, Bashkir, Turkmen, Crimean Tatar, Sakha, Khakas, Tuvan, Southern Altai,
+Northern Altai, Chuvash, Gagauz\
+"""),
+        INSTALL,
+        code("""\
+import turkicnlp
+from turkicnlp.processors.morpheme_tokenizer import MorphemeTokenizer
+"""),
+
+        md("## 1. Basic Usage — Kazakh"),
+        code("""\
+tok = MorphemeTokenizer(lang="kaz")
+tok.load()
+
+# "houses" — stem + plural suffix
+result = tok.segment("үйлер")
+print(f"Word:     {result.word}")
+print(f"Segments: {result.segments}")
+print(f"Labels:   {[m.label for m in result.morphemes]}")
+print(f"Labeled:  {result.labeled}")
+"""),
+        code("""\
+# More complex Kazakh examples
+words = [
+    ("мектепке", "to school — stem + dative"),
+    ("баладан", "from child — stem + ablative"),
+    ("кітабым", "my book — stem + possessive"),
+    ("үйлеріңізде", "in your (formal) houses — stem + plural + poss + locative"),
+    ("бардым", "I went — stem + past tense + 1sg"),
+]
+
+print(f"{'Word':<25} {'Segments':<35} {'Labels'}")
+print("-" * 80)
+for word, gloss in words:
+    result = tok.segment(word)
+    segs = " + ".join(result.segments)
+    labs = " + ".join(m.label for m in result.morphemes)
+    print(f"{word:<25} {segs:<35} {labs}")
+    print(f"  {'':25} ({gloss})")
+"""),
+
+        md("## 2. Turkish Morpheme Segmentation"),
+        code("""\
+tok_tur = MorphemeTokenizer(lang="tur")
+tok_tur.load()
+
+words = [
+    ("evlerde", "in houses — stem + plural + locative"),
+    ("gidiyordum", "I was going — stem + progressive + past + 1sg"),
+    ("okumuşlardır", "they have read — stem + evidential + plural + copula"),
+    ("güzelleştirilmek", "to be beautified — stem + become + causative + passive + infinitive"),
+    ("kitaplarımızdan", "from our books — stem + plural + possessive + ablative"),
+]
+
+print(f"{'Word':<25} {'Segments':<40} {'Labels'}")
+print("-" * 90)
+for word, gloss in words:
+    result = tok_tur.segment(word)
+    segs = " + ".join(result.segments)
+    labs = " + ".join(m.label for m in result.morphemes)
+    print(f"{word:<25} {segs:<40} {labs}")
+    print(f"  {'':25} ({gloss})")
+"""),
+
+        md("## 3. Comparing Morpheme Segmentation Across Languages\n\n"
+           "The same grammatical concept (e.g., plural + dative) is expressed "
+           "with different allomorphs across Turkic languages due to vowel "
+           "harmony and consonant assimilation rules."),
+        code("""\
+# "to schools" in different Turkic languages
+examples = [
+    ("tur", "okullara",    "Turkish"),
+    ("kaz", "мектептерге", "Kazakh"),
+    ("uzb", "maktablarga", "Uzbek"),
+    ("kir", "мектептерге", "Kyrgyz"),
+    ("tat", "мәктәпләргә", "Tatar"),
+    ("aze", "məktəblərə",  "Azerbaijani"),
+]
+
+for lang, word, label in examples:
+    tok = MorphemeTokenizer(lang=lang)
+    tok.load()
+    result = tok.segment(word)
+    segs = " + ".join(result.segments)
+    labs = " + ".join(m.label for m in result.morphemes)
+    print(f"[{label:<12}] {word:<20} → {segs}")
+    print(f"{'':16} labels: {labs}")
+"""),
+
+        md("## 4. Processing Full Sentences\n\n"
+           "The `MorphemeTokenizer` can also process entire documents via "
+           "its `.process()` method, which adds morpheme annotations to each word."),
+        code("""\
+from turkicnlp import Pipeline
+
+# First create a pipeline to tokenize the text
+nlp = Pipeline("kaz", processors=["tokenize", "morph_neural"])
+doc = nlp("Мен мектепке бардым.")
+
+# Then apply morpheme tokenizer to each word
+tok_kaz = MorphemeTokenizer(lang="kaz")
+tok_kaz.load()
+doc = tok_kaz.process(doc)
+
+print(f"{'Word':<20} {'Morphemes':<35} {'Labels'}")
+print("-" * 70)
+for w in doc.words:
+    # _morphemes is set by MorphemeTokenizer.process() on each Word
+    morphemes = getattr(w, '_morphemes', None)
+    if morphemes:
+        segs = " + ".join(m.text for m in morphemes)
+        labs = " + ".join(m.label for m in morphemes)
+    else:
+        segs = w.text
+        labs = "STEM"
+    print(f"{w.text:<20} {segs:<35} {labs}")
+"""),
+
+        md("## 5. Vowel Harmony in Action\n\n"
+           "One of the key features of the morpheme tokenizer is its awareness "
+           "of phonological rules. The same suffix has different surface forms "
+           "depending on the vowel harmony class of the stem."),
+        code("""\
+# Turkish dative suffix: -a/-e (palatal harmony)
+# Turkish plural suffix: -lar/-ler (palatal harmony)
+tok_tur2 = MorphemeTokenizer(lang="tur")
+tok_tur2.load()
+
+harmony_examples = [
+    ("evlere",     "to houses — front vowel stem → -ler, -e"),
+    ("okullara",   "to schools — back vowel stem → -lar, -a"),
+    ("kitaplarda",  "in books — back vowel stem → -lar, -da"),
+    ("defterlerde", "in notebooks — front vowel stem → -ler, -de"),
+]
+
+for word, note in harmony_examples:
+    result = tok_tur2.segment(word)
+    segs = " + ".join(result.segments)
+    print(f"{word:<20} → {segs}")
+    print(f"{'':20}   ({note})")
+"""),
+    ]
+
+
+# ---------------------------------------------------------------------------
+# Define all 24 per-language notebooks + 7 thematic notebooks
 # ---------------------------------------------------------------------------
 NOTEBOOKS = [
     ("01_turkish",          "Turkish",           turkish()),
@@ -2099,6 +2602,12 @@ NOTEBOOKS = [
     ("29_toxicity_detection",
      "Toxicity Detection for Turkic Languages",
      toxicity_detection()),
+    ("30_multilingual_models",
+     "Multilingual Neural Models (Glot500)",
+     multilingual_models()),
+    ("31_morpheme_tokenizer",
+     "Morpheme Tokenizer (Hybrid Neural + FST)",
+     morpheme_tokenizer_demo()),
 ]
 
 

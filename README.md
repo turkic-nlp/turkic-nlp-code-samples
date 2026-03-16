@@ -30,12 +30,12 @@ available for that language.
 | 02 | [Kazakh](notebooks/02_kazakh.ipynb) | `kaz` | Cyrillic / Latin | Kipchak | tok · morph · pos · lemma · dep · NER · emb · trans |
 | 03 | [Kyrgyz](notebooks/03_kyrgyz.ipynb) | `kir` | Cyrillic | Kipchak | tok · morph · pos · lemma · dep · emb · trans |
 | 04 | [Uyghur](notebooks/04_uyghur.ipynb) | `uig` | Arabic / Latin (ULY) | Karluk | tok · morph · pos · lemma · dep · translit · emb · trans |
-| 05 | [Uzbek](notebooks/05_uzbek.ipynb) | `uzb` | Latin / Cyrillic | Karluk | tok · morph · translit · emb · trans |
-| 06 | [Azerbaijani](notebooks/06_azerbaijani.ipynb) | `aze` | Latin / Cyrillic | Oghuz | tok · morph · translit · emb · trans |
-| 07 | [Tatar](notebooks/07_tatar.ipynb) | `tat` | Cyrillic / Zamanälif | Kipchak | tok · morph · translit · emb · trans |
+| 05 | [Uzbek](notebooks/05_uzbek.ipynb) | `uzb` | Latin / Cyrillic | Karluk | tok · morph · pos · lemma · dep · translit · emb · trans |
+| 06 | [Azerbaijani](notebooks/06_azerbaijani.ipynb) | `aze` | Latin / Cyrillic | Oghuz | tok · morph · pos · lemma · dep · translit · emb · trans |
+| 07 | [Tatar](notebooks/07_tatar.ipynb) | `tat` | Cyrillic / Zamanälif | Kipchak | tok · morph · pos · lemma · dep · translit · emb · trans |
 | 08 | [Ottoman Turkish](notebooks/08_ottoman_turkish.ipynb) | `ota` | Arabic | Historical | tok · pos · lemma · dep · translit · emb · trans |
-| 09 | [Bashkir](notebooks/09_bashkir.ipynb) | `bak` | Cyrillic | Kipchak | tok · morph · emb · trans |
-| 10 | [Turkmen](notebooks/10_turkmen.ipynb) | `tuk` | Latin / Cyrillic | Oghuz | tok · morph · translit · emb · trans |
+| 09 | [Bashkir](notebooks/09_bashkir.ipynb) | `bak` | Cyrillic | Kipchak | tok · morph · pos · lemma · dep · emb · trans |
+| 10 | [Turkmen](notebooks/10_turkmen.ipynb) | `tuk` | Latin / Cyrillic | Oghuz | tok · morph · pos · lemma · dep · translit · emb · trans |
 | 11 | [Crimean Tatar](notebooks/11_crimean_tatar.ipynb) | `crh` | Latin / Cyrillic | Kipchak | tok · morph · translit · emb · trans |
 | 12 | [Karakalpak](notebooks/12_karakalpak.ipynb) | `kaa` | Latin / Cyrillic | Kipchak | tok · morph · translit · emb · trans |
 | 13 | [Nogai](notebooks/13_nogai.ipynb) | `nog` | Cyrillic | Kipchak | tok · morph · emb · trans |
@@ -58,9 +58,9 @@ emb = NLLB-200 sentence embeddings, trans = machine translation.
 
 ---
 
-## Part 2 — Thematic Embedding Notebooks (5 notebooks)
+## Part 2 — Thematic Notebooks (7 notebooks)
 
-Advanced use cases built on NLLB-200 sentence embeddings.
+Advanced use cases built on TurkicNLP's neural models and embeddings.
 
 | # | Notebook | Task | Methods |
 |---|----------|------|---------|
@@ -69,6 +69,8 @@ Advanced use cases built on NLLB-200 sentence embeddings.
 | 27 | [Text Classification](notebooks/27_embeddings_classifier.ipynb) | Sentiment analysis + spam/ham detection | Embeddings as features, logistic regression, inline Turkish datasets |
 | 28 | [Multilingual Transfer](notebooks/28_embeddings_multilingual_transfer.ipynb) | Zero-shot cross-lingual classification | Turkish-trained classifier tested on Uzbek/Azerbaijani/Kyrgyz; MT-augmented multilingual training |
 | 29 | [Toxicity Detection](notebooks/29_toxicity_detection.ipynb) | Safe/toxic text classification | Token-based keyword matching; embedding-based per-language classifier; unified multilingual model for 8 FLORES-200 Turkic languages |
+| 30 | [Multilingual Neural Models](notebooks/30_multilingual_models.ipynb) | Multilingual POS/DepParse/Morph with Glot500 | Shared Glot500 backbone, zero-shot parsing for unseen languages, Stanza vs Glot500 comparison |
+| 31 | [Morpheme Tokenizer](notebooks/31_morpheme_tokenizer.ipynb) | Hybrid neural+FST morpheme segmentation | Surface morpheme segmentation with labeled boundaries, vowel harmony, cross-language comparison |
 
 
 ---

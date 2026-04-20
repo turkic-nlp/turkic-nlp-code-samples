@@ -14,7 +14,7 @@ pip install turkicnlp                    # core (tokenisation, transliteration)
 pip install "turkicnlp[stanza]"          # + neural POS, lemma, depparse, NER
 pip install "turkicnlp[nllb]"            # + cross-lingual embeddings & translation
 pip install "turkicnlp[all]"             # all optional extras
-pip install scikit-learn matplotlib      # required for notebooks 27–29
+pip install scikit-learn matplotlib      # required for notebooks 27–29, 32
 ```
 
 ---
@@ -58,7 +58,19 @@ emb = NLLB-200 sentence embeddings, trans = machine translation.
 
 ---
 
-## Part 2 — Thematic Notebooks (7 notebooks)
+## Part 2 — Text Preprocessing & Script Engineering (1 notebook)
+
+Essential preprocessing techniques for handling Turkic text in diverse scripts and formats.
+
+| # | Notebook | Task | Methods |
+|---|----------|------|---------|
+| 32 | [Script Transliteration Pipeline](notebooks/32_transliteration_pipeline.ipynb) | Cross-script text normalization & bidirectional transliteration | Script detection, Cyrillic ↔ Latin, Arabic ↔ Latin, Unicode normalization, Turkish İ/I handling, homoglyph detection, mixed-script corpus processing |
+
+**Chapter reference:** Chapter 3 (Scripts, Encoding, and Orthographic Engineering)
+
+---
+
+## Part 3 — Thematic Notebooks (7 notebooks)
 
 Advanced use cases built on TurkicNLP's neural models and embeddings.
 
@@ -72,10 +84,14 @@ Advanced use cases built on TurkicNLP's neural models and embeddings.
 | 30 | [Multilingual Neural Models](notebooks/30_multilingual_models.ipynb) | Multilingual POS/DepParse/Morph with Glot500 | Shared Glot500 backbone, zero-shot parsing for unseen languages, Stanza vs Glot500 comparison |
 | 31 | [Morpheme Tokenizer](notebooks/31_morpheme_tokenizer.ipynb) | Hybrid neural+FST morpheme segmentation | Surface morpheme segmentation with labeled boundaries, vowel harmony, cross-language comparison |
 
+**Chapters:** Chapters 6–8 (Semantics & Lexical Resources, Sequence Labeling & NER, Syntax & Dependency Parsing)
+
 
 ---
 
-## Toxicity Detection Setup (Notebook 29)
+## Special Setup Requirements
+
+### Toxicity Detection (Notebook 29)
 
 Notebook 29 uses the [FLORES-200 Toxicity-200 word lists](https://github.com/facebookresearch/flores/tree/main/toxicity) published by Meta Research. The word lists for each language are distributed as password-protected ZIP archives.
 

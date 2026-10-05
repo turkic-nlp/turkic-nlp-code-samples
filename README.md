@@ -15,6 +15,9 @@ pip install "turkicnlp[stanza]"          # + neural POS, lemma, depparse, NER
 pip install "turkicnlp[nllb]"            # + cross-lingual embeddings & translation
 pip install "turkicnlp[all]"             # all optional extras
 pip install scikit-learn matplotlib      # required for notebooks 27–29, 32
+# Notebook 33 (speech recognition) needs a separate environment, Python 3.10–3.12:
+#   python3.10 -m venv venv-asr && source venv-asr/bin/activate
+#   pip install "turkicnlp[all,asr]" jupyter ipykernel ipywidgets
 ```
 
 ---
@@ -83,6 +86,7 @@ Advanced use cases built on TurkicNLP's neural models and embeddings.
 | 29 | [Toxicity Detection](notebooks/29_toxicity_detection.ipynb) | Safe/toxic text classification | Token-based keyword matching; embedding-based per-language classifier; unified multilingual model for 8 FLORES-200 Turkic languages |
 | 30 | [Multilingual Neural Models](notebooks/30_multilingual_models.ipynb) | Multilingual POS/DepParse/Morph with Glot500 | Shared Glot500 backbone, zero-shot parsing for unseen languages, Stanza vs Glot500 comparison |
 | 31 | [Morpheme Tokenizer](notebooks/31_morpheme_tokenizer.ipynb) | Hybrid neural+FST morpheme segmentation | Surface morpheme segmentation with labeled boundaries, vowel harmony, cross-language comparison |
+| 33 | [Speech Recognition](notebooks/33_speech_recognition.ipynb) | Speech-to-text for 20 Turkic languages (Omnilingual ASR) | `SpeechRecognizer`, model choice (LLM/CTC, 300M–7B), low-memory loading, batch transcription, segments, output scripts & transliteration, input types, long audio, `Pipeline.from_audio` (speech → POS/parsing), LID/CTS/morphemes/translation on transcripts |
 
 **Chapters:** Chapters 6–8 (Semantics & Lexical Resources, Sequence Labeling & NER, Syntax & Dependency Parsing)
 
